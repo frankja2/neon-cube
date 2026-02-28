@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>halucynator.com</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            overflow: hidden;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            font-family: 'Courier New', monospace;
+            height: 100vh;
+            perspective: 1000px;
+        }
+        .scene {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d;
+        }
+        .cube-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            transform-style: preserve-3d;
+            animation: rotateCube 20s infinite linear;
+        }
+        @keyframes rotateCube {
+            0% { transform: rotateX(-20deg) rotateY(0deg); }
+            100% { transform: rotateX(-20deg) rotateY(360deg); }
+        }
+        .cube {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+        .face {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            background: rgba(0, 20, 40, 0.1);
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.2), inset 0 0 50px rgba(0, 255, 255, 0.1);
+        }
+        .face:nth-child(1) { transform: translateZ(150px); }
+        .face:nth-child(2) { transform: rotateY(90deg) translateZ(150px); }
+        .face:nth-child(3) { transform: rotateY(180deg) translateZ(150px); }
+        .face:nth-child(4) { transform: rotateY(-90deg) translateZ(150px); }
+        .face:nth-child(5) { transform: rotateX(90deg) translateZ(150px); }
+        .face:nth-child(6) { transform: rotateX(-90deg) translateZ(150px); }
+        
+        .inner-cube {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            left: 75px;
+            top: 75px;
+            transform-style: preserve-3d;
+            animation: rotateInner 15s infinite linear reverse;
+        }
+        @keyframes rotateInner {
+            0% { transform: rotateX(20deg) rotateY(0deg); }
+            100% { transform: rotateX(20deg) rotateY(-360deg); }
+        }
+        .inner-face {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border: 2px solid rgba(255, 0, 128, 0.4);
+            background: rgba(20, 0, 20, 0.2);
+            box-shadow: 0 0 30px rgba(255, 0, 128, 0.3), inset 0 0 30px rgba(255, 0, 128, 0.1);
+        }
+        .inner-face:nth-child(1) { transform: translateZ(75px); }
+        .inner-face:nth-child(2) { transform: rotateY(90deg) translateZ(75px); }
+        .inner-face:nth-child(3) { transform: rotateY(180deg) translateZ(75px); }
+        .inner-face:nth-child(4) { transform: rotateY(-90deg) translateZ(75px); }
+        .inner-face:nth-child(5) { transform: rotateX(90deg) translateZ(75px); }
+        .inner-face:nth-child(6) { transform: rotateX(-90deg) translateZ(75px); }
+
+        .text-container {
+            position: absolute;
+            z-index: 100;
+            text-align: center;
+            transform: translateZ(200px);
+        }
+        .main-text {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 
+                0 0 10px #00ffff,
+                0 0 20px #00ffff,
+                0 0 40px #00ffff,
+                0 0 80px #00ffff;
+            letter-spacing: 0.2em;
+            animation: pulse 3s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { 
+                text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 20px #ff0080, 0 0 40px #ff0080, 0 0 80px #ff0080, 0 0 120px #ff0080;
+                transform: scale(1.05);
+            }
+        }
+        .subtitle {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.5em;
+        }
+
+        /* ===== RESPONSIVE MOBILE ===== */
+        @media (max-width: 768px) {
+            .cube-container {
+                width: 180px;
+                height: 180px;
+            }
+            .face {
+                width: 180px;
+                height: 180px;
+            }
+            .face:nth-child(1) { transform: translateZ(90px); }
+            .face:nth-child(2) { transform: rotateY(90deg) translateZ(90px); }
+            .face:nth-child(3) { transform: rotateY(180deg) translateZ(90px); }
+            .face:nth-child(4) { transform: rotateY(-90deg) translateZ(90px); }
+            .face:nth-child(5) { transform: rotateX(90deg) translateZ(90px); }
+            .face:nth-child(6) { transform: rotateX(-90deg) translateZ(90px); }
+
+            .inner-cube {
+                width: 90px;
+                height: 90px;
+                left: 45px;
+                top: 45px;
+            }
+            .inner-face {
+                width: 90px;
+                height: 90px;
+            }
+            .inner-face:nth-child(1) { transform: translateZ(45px); }
+            .inner-face:nth-child(2) { transform: rotateY(90deg) translateZ(45px); }
+            .inner-face:nth-child(3) { transform: rotateY(180deg) translateZ(45px); }
+            .inner-face:nth-child(4) { transform: rotateY(-90deg) translateZ(45px); }
+            .inner-face:nth-child(5) { transform: rotateX(90deg) translateZ(45px); }
+            .inner-face:nth-child(6) { transform: rotateX(-90deg) translateZ(45px); }
+
+            .text-container {
+                transform: translateZ(100px);
+                padding: 0 20px;
+            }
+            .main-text {
+                font-size: 1.8rem;
+                letter-spacing: 0.1em;
+            }
+            .subtitle {
+                font-size: 0.7rem;
+                letter-spacing: 0.3em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cube-container {
+                width: 140px;
+                height: 140px;
+            }
+            .face {
+                width: 140px;
+                height: 140px;
+            }
+            .face:nth-child(1) { transform: translateZ(70px); }
+            .face:nth-child(2) { transform: rotateY(90deg) translateZ(70px); }
+            .face:nth-child(3) { transform: rotateY(180deg) translateZ(70px); }
+            .face:nth-child(4) { transform: rotateY(-90deg) translateZ(70px); }
+            .face:nth-child(5) { transform: rotateX(90deg) translateZ(70px); }
+            .face:nth-child(6) { transform: rotateX(-90deg) translateZ(70px); }
+
+            .inner-cube {
+                width: 70px;
+                height: 70px;
+                left: 35px;
+                top: 35px;
+            }
+            .inner-face {
+                width: 70px;
+                height: 70px;
+            }
+            .inner-face:nth-child(1) { transform: translateZ(35px); }
+            .inner-face:nth-child(2) { transform: rotateY(90deg) translateZ(35px); }
+            .inner-face:nth-child(3) { transform: rotateY(180deg) translateZ(35px); }
+            .inner-face:nth-child(4) { transform: rotateY(-90deg) translateZ(35px); }
+            .inner-face:nth-child(5) { transform: rotateX(90deg) translateZ(35px); }
+            .inner-face:nth-child(6) { transform: rotateX(-90deg) translateZ(35px); }
+
+            .main-text {
+                font-size: 1.4rem;
+                letter-spacing: 0.05em;
+            }
+            .subtitle {
+                font-size: 0.6rem;
+                letter-spacing: 0.2em;
+            }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(0, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float 10s infinite;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="scene">
+        <div class="cube-container">
+            <div class="cube">
+                <div class="face"></div>
+                <div class="face"></div>
+                <div class="face"></div>
+                <div class="face"></div>
+                <div class="face"></div>
+                <div class="face"></div>
+            </div>
+            <div class="inner-cube">
+                <div class="inner-face"></div>
+                <div class="inner-face"></div>
+                <div class="inner-face"></div>
+                <div class="inner-face"></div>
+                <div class="inner-face"></div>
+                <div class="inner-face"></div>
+            </div>
+        </div>
+        <div class="text-container">
+            <div class="main-text">halucynator.com</div>
+            <div class="subtitle">DIGITAL EXPERIENCE</div>
+        </div>
+    </div>
+    <script>
+        // Generate floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Mouse interaction (desktop)
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 30;
+            const y = (e.clientY / window.innerHeight - 0.5) * 30;
+            document.querySelector('.scene').style.transform = 
+                `rotateX(${y}deg) rotateY(${x}deg)`;
+        });
+
+        // Touch interaction (mobile)
+        let touchStartX = 0;
+        let touchStartY = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        document.addEventListener('touchmove', (e) => {
+            const touchX = e.touches[0].clientX;
+            const touchY = e.touches[0].clientY;
+            const x = ((touchX - touchStartX) / window.innerWidth) * 60;
+            const y = ((touchY - touchStartY) / window.innerHeight) * 60;
+            document.querySelector('.scene').style.transform = 
+                `rotateX(${-y}deg) rotateY(${x}deg)`;
+        }, { passive: true });
+
+        document.addEventListener('touchend', () => {
+            document.querySelector('.scene').style.transform = 'rotateX(0deg) rotateY(0deg)';
+        });
+    </script>
+</body>
+</html>
