@@ -3,129 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VetCare – profesjonalna klinika weterynaryjna w Warszawie. Konsultacje, szczepienia, grooming, chirurgia, badania laboratoryjne i pogotowie 24/7.">
     <title>VetCare - Klinika Weterynaryjna</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        
+
         /* Header */
         header { background: linear-gradient(135deg, #2c5f2d 0%, #4a7c59 100%); color: white; padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         header h1 { font-size: 1.8rem; }
         header span { color: #97bc62; }
-        
+
         /* Hero */
-        .hero { background: linear-gradient(rgba(44,95,45,0.8), rgba(74,124,89,0.8)), url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"40\" fill=\"none\" stroke=\"%2397bc62\" stroke-width=\"0.5\" opacity=\"0.3\"/\u003e</svg>'); color: white; padding: 4rem 0; text-align: center; }
+        .hero { background: linear-gradient(rgba(44,95,45,0.8), rgba(74,124,89,0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="%2397bc62" stroke-width="0.5" opacity="0.3"/></svg>'); color: white; padding: 4rem 0; text-align: center; }
         .hero h2 { font-size: 2.5rem; margin-bottom: 1rem; }
         .hero p { font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9; }
-        .btn { display: inline-block; background: #97bc62; color: #2c5f2d; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; transition: transform 0.3s; }
+
+        /* FIX: dodano box-shadow do transition i :focus-visible dla dostępności klawiatury */
+        .btn { display: inline-block; background: #97bc62; color: #2c5f2d; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; transition: transform 0.3s, box-shadow 0.3s; }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        
+        .btn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; box-shadow: 0 0 0 5px rgba(151,188,98,0.5); }
+
         /* Services */
         .services { padding: 3rem 0; background: #f9f9f9; }
         .services h3 { text-align: center; font-size: 2rem; color: #2c5f2d; margin-bottom: 2rem; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-        .card { background: white; padding: 2rem; border-radius: 10px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: transform 0.3s; }
+
+        /* FIX: dodano box-shadow do transition */
+        .card { background: white; padding: 2rem; border-radius: 10px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 5px 20px rgba(0,0,0,0.15); }
         .card-icon { font-size: 3rem; margin-bottom: 1rem; }
         .card h4 { color: #2c5f2d; margin-bottom: 0.5rem; }
         .card p { color: #666; font-size: 0.9rem; }
-        
+
         /* Contact */
         .contact { padding: 3rem 0; background: #2c5f2d; color: white; }
         .contact h3 { text-align: center; font-size: 2rem; margin-bottom: 2rem; }
         .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center; }
         .contact-item h4 { color: #97bc62; margin-bottom: 0.5rem; }
         .contact-item p { opacity: 0.9; }
-        
+        .contact-item a { color: inherit; text-decoration: underline; }
+        .contact-item a:hover { color: #97bc62; }
+
         /* Footer */
         footer { background: #1a3a1b; color: white; text-align: center; padding: 1.5rem 0; }
         footer p { opacity: 0.8; font-size: 0.9rem; }
-        
+
         /* Mobile */
         @media (max-width: 768px) {
             .hero h2 { font-size: 1.8rem; }
             .hero p { font-size: 1rem; }
             header h1 { font-size: 1.4rem; }
         }
+
+        /* FIX: redukcja ruchu dla użytkowników wrażliwych na animacje */
+        @media (prefers-reduced-motion: reduce) {
+            .btn, .card { transition: none; }
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>🐾 Vet<span>Care</span></h1>
+            <h1><span aria-hidden="true">🐾</span> Vet<span>Care</span></h1>
         </div>
     </header>
 
-    <section class="hero">
-        <div class="container">
-            <h2>Profesjonalna Opieka dla Twojego Pupila</h2>
-            <p>Kompleksowe usługi weterynaryjne z pasją i zaangażowaniem</p>
-            <a href="#kontakt" class="btn">Umów Wizytę</a>
-        </div>
-    </section>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Profesjonalna Opieka dla Twojego Pupila</h2>
+                <p>Kompleksowe usługi weterynaryjne z pasją i zaangażowaniem</p>
+                <a href="#kontakt" class="btn">Umów Wizytę</a>
+            </div>
+        </section>
 
-    <section class="services">
-        <div class="container">
-            <h3>Nasze Usługi</h3>
-            <div class="grid">
-                <div class="card">
-                    <div class="card-icon">🏥</div>
-                    <h4>Konsultacje</h4>
-                    <p>Profesjonalne badanie i diagnostyka. Profilaktyka i leczenie chorób.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">💉</div>
-                    <h4>Szczepienia</h4>
-                    <p>Kompletny program szczepień ochronnych dla psów, kotów i innych zwierząt.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">✂️</div>
-                    <h4>Grooming</h4>
-                    <p>Strzyżenie, kąpiele, pielęgnacja pazurów i uszu. Twoje zwierzę wygląda pięknie!</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🦴</div>
-                    <h4>Chirurgia</h4>
-                    <p>Zabiegi chirurgiczne w pełnym znieczuleniu. Nowoczesny sprzęt operacyjny.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">📋</div>
-                    <h4>Badania Lab</h4>
-                    <p>Analiza krwi, moczu, cytologia. Wyniki w ciągu 24h.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🚑</div>
-                    <h4>Pogotowie</h4>
-                    <p>Całodobowa opieka nagłych przypadków. Jesteśmy dostępni 24/7.</p>
+        <section class="services">
+            <div class="container">
+                <h3>Nasze Usługi</h3>
+                <div class="grid">
+                    <div class="card">
+                        <!-- FIX: aria-hidden na dekoracyjnych emoji — czytniki ekranowe pomijają ikonę -->
+                        <div class="card-icon" aria-hidden="true">🏥</div>
+                        <h4>Konsultacje</h4>
+                        <p>Profesjonalne badanie i diagnostyka. Profilaktyka i leczenie chorób.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" aria-hidden="true">💉</div>
+                        <h4>Szczepienia</h4>
+                        <p>Kompletny program szczepień ochronnych dla psów, kotów i innych zwierząt.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" aria-hidden="true">✂️</div>
+                        <h4>Grooming</h4>
+                        <p>Strzyżenie, kąpiele, pielęgnacja pazurów i uszu. Twoje zwierzę wygląda pięknie!</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" aria-hidden="true">🦴</div>
+                        <h4>Chirurgia</h4>
+                        <p>Zabiegi chirurgiczne w pełnym znieczuleniu. Nowoczesny sprzęt operacyjny.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" aria-hidden="true">📋</div>
+                        <h4>Badania Lab</h4>
+                        <p>Analiza krwi, moczu, cytologia. Wyniki w ciągu 24h.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" aria-hidden="true">🚑</div>
+                        <h4>Pogotowie</h4>
+                        <p>Całodobowa opieka nagłych przypadków. Jesteśmy dostępni 24/7.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="contact" id="kontakt">
-        <div class="container">
-            <h3>Kontakt</h3>
-            <div class="contact-grid">
-                <div class="contact-item">
-                    <h4>📍 Adres</h4>
-                    <p>ul. Zwierzęca 42<br>00-001 Warszawa</p>
-                </div>
-                <div class="contact-item">
-                    <h4>📞 Telefon</h4>
-                    <p>+48 123 456 789<br>Pogotowie: +48 987 654 321</p>
-                </div>
-                <div class="contact-item">
-                    <h4>🕐 Godziny</h4>
-                    <p>Pn-Pt: 8:00 - 20:00<br>Sb: 9:00 - 14:00</p>
-                </div>
-                <div class="contact-item">
-                    <h4>✉️ Email</h4>
-                    <p>kontakt@vetcare.pl<br>📱 FB/IG: @vetcare</p>
+        <section class="contact" id="kontakt">
+            <div class="container">
+                <h3>Kontakt</h3>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <h4><span aria-hidden="true">📍</span> Adres</h4>
+                        <p>ul. Zwierzęca 42<br>00-001 Warszawa</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4><span aria-hidden="true">📞</span> Telefon</h4>
+                        <!-- FIX: numery telefonów jako klikalne linki tel: -->
+                        <p>
+                            <a href="tel:+48123456789">+48 123 456 789</a><br>
+                            Pogotowie: <a href="tel:+48987654321">+48 987 654 321</a>
+                        </p>
+                    </div>
+                    <div class="contact-item">
+                        <h4><span aria-hidden="true">🕐</span> Godziny</h4>
+                        <p>Pn-Pt: 8:00 - 20:00<br>Sb: 9:00 - 14:00</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4><span aria-hidden="true">✉️</span> Email</h4>
+                        <!-- FIX: email jako klikalny link mailto: -->
+                        <p>
+                            <a href="mailto:kontakt@vetcare.pl">kontakt@vetcare.pl</a><br>
+                            <span aria-hidden="true">📱</span> FB/IG: @vetcare
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer>
         <div class="container">
