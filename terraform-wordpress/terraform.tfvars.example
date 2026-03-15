@@ -1,0 +1,45 @@
+# ==============================================================================
+# Example terraform.tfvars - Copy to terraform.tfvars and fill in values
+# IMPORTANT: Never commit terraform.tfvars with real secrets to version control!
+# ==============================================================================
+
+# Required - Azure Account
+subscription_id = "00000000-0000-0000-0000-000000000000"
+tenant_id       = "00000000-0000-0000-0000-000000000000"
+
+# Optional - Service Principal (for CI/CD or non-interactive auth)
+# If omitted, Terraform will use Azure CLI / Managed Identity auth
+# client_id     = "00000000-0000-0000-0000-000000000000"
+# client_secret = "your-client-secret"
+
+# General
+project_name = "wp"
+environment  = "dev"
+location     = "polandcentral"
+
+# Tags
+tags = {
+  owner   = "your-team"
+  purpose = "wordpress"
+}
+
+# Networking (defaults are fine for most deployments)
+# vnet_address_space        = "10.0.0.0/16"
+# subnet_app_address_prefix = "10.0.1.0/24"
+# subnet_db_address_prefix  = "10.0.2.0/24"
+
+# MySQL
+mysql_admin_username    = "wpadmin"
+mysql_admin_password    = "Ch@ngeMe!2024Str0ng"  # CHANGE THIS!
+mysql_sku_name          = "B_Standard_B1ms"       # Dev: B_Standard_B1ms, Prod: GP_Standard_D2ads_v5
+mysql_version           = "8.0.21"
+mysql_storage_size_gb   = 20
+mysql_database_name     = "wordpress"
+
+# App Service
+app_service_sku_name = "B1"  # Dev: B1, Prod: P1v3
+
+# WordPress
+wordpress_docker_image = "appsvc/wordpress-alpine-php:8.2"
+wordpress_title        = "My WordPress Site"
+wordpress_admin_email  = "admin@example.com"
