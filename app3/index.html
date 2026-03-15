@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DobroZwierz — Przychodnia Weterynaryjna</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐾%3C/text%3E%3C/svg%3E">
+    
+    <!-- Variable fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === COLOR PALETTE: Warm Clay + Forest Green + Dusty Rose === */
+        :root {
+            --clay-100: #f5f0e8;
+            --clay-200: #e8ddd0;
+            --clay-300: #d4c4b0;
+            --forest-500: #2d4a3e;
+            --forest-600: #1a2f28;
+            --forest-700: #0f1f1a;
+            --rose-400: #c9a9a6;
+            --rose-500: #b88d8a;
+            --ochre-400: #c9a66b;
+            --ochre-500: #a8884d;
+            --mist: rgba(245, 240, 232, 0.95);
+            
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Space Grotesk', sans-serif;
+            
+            --ease-organic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --ease-bounce: cubic-bezier(0.68, -0.15, 0.265, 1.35);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--clay-100);
+            color: var(--forest-700);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* === NOISE TEXTURE OVERLAY === */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            z-index: 1000;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+        
+        /* === HEADER === */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.2rem 3.2rem 1.4rem 2.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(180deg, var(--mist) 0%, transparent 100%);
+            backdrop-filter: blur(8px);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            text-decoration: none;
+        }
+        
+        .logo-mark {
+            width: 52px;
+            height: 52px;
+            background: var(--forest-500);
+            border-radius: 45% 55% 50% 50% / 55% 45% 55% 45%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            transform: rotate(-3deg);
+            transition: transform 0.4s var(--ease-organic);
+        }
+        
+        .logo:hover .logo-mark {
+            transform: rotate(5deg) scale(1.08);
+        }
+        
+        .logo-text {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 650;
+            color: var(--forest-600);
+            letter-spacing: -0.02em;
+        }
+        
+        .logo-text span {
+            color: var(--rose-500);
+            font-style: italic;
+        }
+        
+        nav {
+            display: flex;
+            gap: 2.8rem;
+            align-items: center;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--forest-600);
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 0.4rem 0;
+            transition: color 0.3s;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--ochre-500);
+            transition: width 0.4s var(--ease-organic);
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .cta-btn {
+            background: var(--forest-500);
+            color: var(--clay-100);
+            padding: 0.85rem 1.8rem;
+            border-radius: 28px 32px 30px 26px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.35s var(--ease-organic);
+            box-shadow: 3px 5px 20px rgba(45, 74, 62, 0.25);
+            border: 2px solid transparent;
+        }
+        
+        .cta-btn:hover {
+            background: var(--forest-600);
+            transform: translateY(-3px) rotate(1deg);
+            box-shadow: 5px 8px 30px rgba(45, 74, 62, 0.35);
+        }
+        
+        /* === HERO - BENTO BOX LAYOUT === */
+        .hero {
+            min-height: 100vh;
+            padding: 9rem 4rem 6rem 3.5rem;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            grid-template-rows: auto auto;
+            gap: 2.2rem;
+            align-items: start;
+        }
+        
+        .hero-main {
+            grid-row: span 2;
+            padding: 4rem 3.5rem 4.5rem 3rem;
+            background: var(--forest-500);
+            border-radius: 48px 32px 56px 40px;
+            color: var(--clay-100);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                12px 18px 60px rgba(45, 74, 62, 0.35),
+                -4px -6px 30px rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero-main::before {
+            content: '🐕';
+            position: absolute;
+            top: -2rem;
+            right: -1.5rem;
+            font-size: 12rem;
+            opacity: 0.06;
+            transform: rotate(15deg);
+            pointer-events: none;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: var(--ochre-500);
+            color: var(--forest-700);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px 24px 22px 18px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.8rem;
+            transform: rotate(-1.5deg);
+        }
+        
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.8rem, 5vw, 4.2rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+        
+        .hero h1 em {
+            color: var(--ochre-400);
+            font-style: italic;
+            font-weight: 500;
+        }
+        
+        .hero p {
+            font-size: 1.15rem;
+            opacity: 0.92;
+            max-width: 90%;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary {
+            background: var(--ochre-500);
+            color: var(--forest-700);
+            padding: 1.1rem 2.2rem;
+            border-radius: 32px 28px 34px 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.35s var(--ease-bounce);
+            display: inline-block;
+            border: 3px solid transparent;
+        }
+        
+        .btn-primary:hover {
+            background: var(--clay-100);
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--clay-100);
+            padding: 1.1rem 2.2rem;
+            border-radius: 30px 34px 28px 32px;
+            text-decoration: none;
+            font-weight: 500;
+            border: 2px solid var(--clay-300);
+            transition: all 0.35s;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--clay-100);
+            color: var(--forest-600);
+            border-color: var(--clay-100);
+        }
+        
+        .hero-side-top {
+            background: var(--rose-400);
+            padding: 2.5rem;
+            border-radius: 32px 48px 40px 36px;
+            color: var(--forest-700);
+            box-shadow: 8px 12px 40px rgba(184, 141, 138, 0.3);
+        }
+        
+        .hero-side-top h3 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hours-list {
+            list-style: none;
+        }
+        
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px dashed var(--forest-600);
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        
+        .hours-list li:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            color: var(--forest-600);
+        }
+        
+        .hero-side-bottom {
+            background: var(--clay-200);
+            padding: 2.5rem;
+            border-radius: 36px 28px 52px 44px;
+            border: 2px solid var(--clay-300);
+        }
+        
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--forest-500);
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--forest-600);
+            opacity: 0.85;
+            margin-top: 0.5rem;
+        }
+        
+        /* === SERVICES - ORGANIC GRID === */
+        .services {
+            padding: 7rem 4rem 8rem 3.5rem;
+            background: var(--clay-100);
+            position: relative;
+        }
+        
+        .services::before {
+            content: '';
+            position: absolute;
+            top: -3rem;
+            left: 0;
+            right: 0;
+            height: 6rem;
+            background: var(--clay-100);
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+        }
+        
+        .section-header {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 0 4rem 0;
+            padding-left: 0.5rem;
+        }
+        
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            font-weight: 650;
+            color: var(--forest-600);
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .section-header h2 span {
+            color: var(--rose-500);
+            font-style: italic;
+        }
+        
+        .section-header p {
+            font-size: 1.15rem;
+            color: var(--forest-600);
+            opacity: 0.85;
+        }
+        
+        /* Bento Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, auto);
+            gap: 1.8rem;
+        }
+        
+        .bento-item {
+            background: var(--clay-200);
+            border-radius: 28px;
+            padding: 2.2rem;
+            transition: all 0.4s var(--ease-organic);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+        
+        .bento-item:hover {
+            transform: translateY(-8px) rotate(0.5deg);
+            box-shadow: 0 25px 50px rgba(45, 74, 62, 0.15);
+            border-color: var(--rose-400);
+        }
+        
+        .bento-item.large {
+            grid-column: span 2;
+            grid-row: span 2;
+            background: var(--forest-500);
+            color: var(--clay-100);
+        }
+        
+        .bento-item.wide {
+            grid-column: span 2;
+        }
+        
+        .bento-item.tall {
+            grid-row: span 2;
+        }
+        
+        .bento-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1.2rem;
+            display: inline-block;
+            transition: transform 0.4s var(--ease-bounce);
+        }
+        
+        .bento-item:hover .bento-icon {
+            transform: scale(1.15) rotate(-5deg);
+        }
+        
+        .bento-item h3 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            font-weight: 650;
+        }
+        
+        .bento-item.large h3 {
+            font-size: 1.9rem;
+        }
+        
+        .bento-item p {
+            font-size: 0.95rem;
+            opacity: 0.88;
+            line-height: 1.6;
+        }
+        
+        .price-tag {
+            display: inline-block;
+            background: var(--ochre-500);
+            color: var(--forest-700);
+            padding: 0.4rem 1rem;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-top: 1.2rem;
+        }
+        
+        /* === TEAM SECTION === */
+        .team {
+            padding: 8rem 4rem 9rem 3.5rem;
+            background: var(--forest-600);
+            color: var(--clay-100);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team::before {
+            content: '🐾';
+            position: absolute;
+            bottom: -5rem;
+            right: -3rem;
+            font-size: 25rem;
+            opacity: 0.03;
+            transform: rotate(-20deg);
+        }
+        
+        .team-header {
+            margin-bottom: 4.5rem;
+        }
+        
+        .team-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            font-weight: 650;
+            margin-bottom: 1.2rem;
+        }
+        
+        .team-header h2 span {
+            color: var(--ochre-400);
+            font-style: italic;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+        
+        .team-card {
+            background: rgba(245, 240, 232, 0.08);
+            border-radius: 32px 28px 36px 40px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.4s var(--ease-organic);
+            border: 1px solid rgba(245, 240, 232, 0.15);
+        }
+        
+        .team-card:hover {
+            background: rgba(245, 240, 232, 0.12);
+            transform: translateY(-10px);
+            border-color: var(--ochre-500);
+        }
+        
+        .team-avatar {
+            width: 110px;
+            height: 110px;
+            background: var(--rose-500);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            border: 4px solid var(--clay-300);
+            transition: transform 0.4s var(--ease-bounce);
+        }
+        
+        .team-card:hover .team-avatar {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .team-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            margin-bottom: 0.4rem;
+        }
+        
+        .team-role {
+            color: var(--ochre-400);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        /* === CONTACT === */
+        .contact {
+            padding: 8rem 4rem 7rem 3.5rem;
+            background: var(--clay-200);
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        
+        .contact-info h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            font-weight: 650;
+            color: var(--forest-600);
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-info h2 span {
+            color: var(--rose-500);
+            font-style: italic;
+        }
+        
+        .contact-item {
+            display: flex;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+            align-items: flex-start;
+        }
+        
+        .contact-icon {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+        
+        .contact-item h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--forest-600);
+            margin-bottom: 0.3rem;
+        }
+        
+        .contact-item p {
+            color: var(--forest-600);
+            opacity: 0.85;
+            font-size: 0.95rem;
+        }
+        
+        .contact-form {
+            background: var(--clay-100);
+            padding: 2.8rem;
+            border-radius: 36px 44px 40px 32px;
+            box-shadow: 0 20px 60px rgba(45, 74, 62, 0.12);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            color: var(--forest-600);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 2px solid var(--clay-300);
+            border-radius: 16px 20px 18px 14px;
+            background: transparent;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--forest-500);
+            box-shadow: 0 0 0 4px rgba(45, 74, 62, 0.08);
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: var(--forest-500);
+            color: var(--clay-100);
+            padding: 1.2rem;
+            border: none;
+            border-radius: 24px 28px 26px 22px;
+            font-family: var(--font-body);
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.35s var(--ease-organic);
+        }
+        
+        .submit-btn:hover {
+            background: var(--forest-600);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(45, 74, 62, 0.3);
+        }
+        
+        /* === FOOTER === */
+        footer {
+            background: var(--forest-700);
+            color: var(--clay-300);
+            padding: 3.5rem 4rem 2.5rem 3.5rem;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 650;
+            margin-bottom: 1rem;
+            color: var(--clay-100);
+        }
+        
+        .footer-logo span {
+            color: var(--rose-400);
+            font-style: italic;
+        }
+        
+        footer p {
+            font-size: 0.9rem;
+            opacity: 0.75;
+        }
+        
+        /* === RESPONSIVE === */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 8rem 2.5rem 4rem;
+            }
+            
+            .hero-main {
+                grid-row: span 1;
+            }
+            
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .bento-item.large {
+                grid-column: span 2;
+                grid-row: span 1;
+            }
+            
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+            
+            nav {
+                display: none;
+            }
+            
+            .hero {
+                padding: 7rem 1.5rem 4rem;
+            }
+            
+            .hero-main {
+                padding: 2.5rem 2rem;
+            }
+            
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .bento-item.large,
+            .bento-item.wide,
+            .bento-item.tall {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .services {
+                padding: 5rem 1.5rem;
+            }
+            
+            .team,
+            .contact {
+                padding: 5rem 1.5rem;
+            }
+        }
+        
+        /* === SCROLL ANIMATIONS === */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-in {
+            animation: fadeInUp 0.8s var(--ease-organic) forwards;
+        }
+        
+        /* === LOADING STATE === */
+        .loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        
+        .loading::after {
+            content: '⏳';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">
+            <div class="logo-mark">🐾</div>
+            <div class="logo-text">Dobro<span>Zwierz</span></div>
+        </a>
+        <nav>
+            <a href="#uslugi">Usługi</a>
+            <a href="#zespol">Zespół</a>
+            <a href="#kontakt">Kontakt</a>
+            <a href="#kontakt" class="cta-btn">Umów wizytę</a>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <div class="hero-main">
+            <span class="hero-badge">Przychodnia z pasją od 2015</span>
+            <h1>Zdrowie Twojego pupila <em>w najlepszych rękach</em></h1>
+            <p>Bo zwierzaki to nie zwierzęta — to rodzina. Leczymy z empatią, profilaktyką i najnowszą wiedzą weterynaryjną.</p>
+            <div class="hero-actions">
+                <a href="#kontakt" class="btn-primary">Zapisz wizytę</a>
+                <a href="#uslugi" class="btn-secondary">Nasze usługi</a>
+            </div>
+        </div>
+        
+        <div class="hero-side-top">
+            <h3>🕐 Godziny otwarcia</h3>
+            <ul class="hours-list">
+                <li><span>Poniedziałek — Piątek</span><span>8:00 — 20:00</span></li>
+                <li><span>Sobota</span><span>9:00 — 15:00</span></li>
+                <li><span>Niedziela</span><span>Pogotowie 24h</span></li>
+            </ul>
+        </div>
+        
+        <div class="hero-side-bottom">
+            <div class="stat-number">15k+</div>
+            <div class="stat-label">wyleczonych pacjentów</div>
+        </div>
+    </section>
+    
+    <section class="services" id="uslugi">
+        <div class="section-header">
+            <h2>Nasze <span>usługi</span></h2>
+            <p>Od profilaktyki po chirurgię — kompleksowa opieka na każdym etapie życia Twojego zwierzaka.</p>
+        </div>
+        
+        <div class="bento-grid">
+            <div class="bento-item large">
+                <div class="bento-icon">🏥</div>
+                <h3>Konsultacje lekarskie</h3>
+                <p>Diagnostyka, leczenie chorób, drugie opinie. Każdy pacjent traktowany indywidualnie z pełnym zaangażowaniem.</p>
+                <span class="price-tag">Od 80 zł</span>
+            </div>
+            
+            <div class="bento-item">
+                <div class="bento-icon">💉</div>
+                <h3>Szczepienia</h3>
+                <p>Kompletny program profilaktyczny dla psów, kotów i gryzoni.</p>
+                <span class="price-tag">Od 45 zł</span>
+            </div>
+            
+            <div class="bento-item tall">
+                <div class="bento-icon">✂️</div>
+                <h3>Grooming</h3>
+                <p>Strzyżenie, kąpiele, pielęgnacja pazurków i uszu. Twój pupil wygląda olśniewająco!</p>
+                <span class="price-tag">Od 60 zł</span>
+            </div>
+            
+            <div class="bento-item wide">
+                <div class="bento-icon">🦴</div>
+                <h3>Chirurgia</h3>
+                <p>Zabiegi w pełnym znieczuleniu, nowoczesny sprzęt, opieka pooperacyjna.</p>
+                <span class="price-tag">Wycena indywidualna</span>
+            </div>
+            
+            <div class="bento-item">
+                <div class="bento-icon">📋</div>
+                <h3>Badania lab</h3>
+                <p>Analiza krwi, moczu, cytologia — wyniki w 24h.</p>
+                <span class="price-tag">Od 35 zł</span>
+            </div>
+            
+            <div class="bento-item">
+                <div class="bento-icon">🚑</div>
+                <h3>Pogotowie</h3>
+                <p>Całodobowa opieka nagłych przypadków. Zawsze jesteśmy dostępni.</p>
+                <span class="price-tag">24h/7</span>
+            </div>
+        </div>
+    </section>
+    
+    <section class="team" id="zespol">
+        <div class="team-header">
+            <h2>Poznaj <span>nasz zespół</span></h2>
+            <p>Lekarze z powołania, nie z przypadku.</p>
+        </div>
+        
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-avatar">👨‍⚕️</div>
+                <h4>dr Marek Włodarczyk</h4>
+                <p class="team-role">Chirurg, ortopeda</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">👩‍⚕️</div>
+                <h4>dr Anna Kowalska</h4>
+                <p class="team-role">Internista, dermatolog</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">👨‍⚕️</div>
+                <h4>dr Piotr Nowicki</h4>
+                <p class="team-role">Anestezjolog, onkolog</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="contact" id="kontakt">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h2>Umów <span>wizytę</span></h2>
+                <p>Zadzwoń, napisz lub wypełnij formularz — odpowiadamy w ciągu godziny.</p>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div>
+                        <h4>Adres</h4>
+                        <p>ul. Zwierzęca 42<br>00-001 Warszawa</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <div>
+                        <h4>Telefon</h4>
+                        <p>+48 123 456 789<br>Pogotowie: +48 987 654 321</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">✉️</div>
+                    <div>
+                        <h4>Email</h4>
+                        <p>kontakt@dobrozwierz.pl</p>
+                    </div>
+                </div>
+            </div>
+            
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Imię i nazwisko</label>
+                    <input type="text" id="name" name="name" required placeholder="Jan Kowalski">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="jan@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="pet">Imię pupila</label>
+                    <input type="text" id="pet" name="pet" placeholder="Reksio">
+                </div>
+                <div class="form-group">
+                    <label for="message">Wiadomość</label>
+                    <textarea id="message" name="message" required placeholder="Opisz co dolega Twojemu zwierzakowi..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Wyślij wiadomość</button>
+            </form>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-logo">Dobro<span>Zwierz</span></div>
+        <p>© 2026 DobroZwierz — Przychodnia Weterynaryjna. Z pasją dla zwierząt.</p>
+    </footer>
+    
+    <script>
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Form handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('.submit-btn');
+            const originalText = btn.textContent;
+            
+            btn.textContent = 'Wysyłanie...';
+            btn.classList.add('loading');
+            
+            setTimeout(() => {
+                btn.textContent = '✓ Wysłano! Odpowiemy wkrótce';
+                btn.style.background = '#4a7c59';
+                this.reset();
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                    btn.classList.remove('loading');
+                }, 3000);
+            }, 1500);
+        });
+        
+        // Scroll animation observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe bento items and team cards
+        document.querySelectorAll('.bento-item, .team-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
